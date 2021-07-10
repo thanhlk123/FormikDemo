@@ -7,7 +7,7 @@ import {
   ScrollView,
 } from 'react-native';
 
-const usageDemoList = ['BasicForm'];
+const usageDemoList = ['BasicForm', 'FormValidateByYup'];
 
 const DashBoard = ({navigation}) => {
   return (
@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
+    marginTop: 15,
   },
   primaryText: {
     color: '#ffffff',

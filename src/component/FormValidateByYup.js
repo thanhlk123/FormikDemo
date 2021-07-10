@@ -1,51 +1,39 @@
-import React, {useState, useEffect} from 'react';
-import {Button, TextInput, View, StyleSheet, Text} from 'react-native';
-import {Formik} from 'formik';
+import React from 'react';
+import {View, Text, Button, StyleSheet, TextInput} from 'react-native';
+import {Formik, Form, Field, ErrorMessage} from 'formik';
+import * as Yup from 'yup';
 
-const BasicForm = () => {
-  const intialValues = {email: '', password: ''};
-  const [formValues, setFormValues] = useState(intialValues);
-  const [formErrors, setFormErrors] = useState({});
+const SignupSchema = Yup.object().shape({
+  password: Yup.string()
+    .required('Required')
+    .min(4, 'Vui lòng nhập password dài hơn'),
+  email: Yup.string().email('Invalid email').required('Required'),
+});
 
-  const validate = values => {
-    let errors = {};
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-    if (!values.email) {
-      errors.email = 'Cannot be blank';
-    } else if (!regex.test(values.email)) {
-      errors.email = 'Invalid email format';
-    }
-    if (!values.password) {
-      errors.password = 'Cannot be blank';
-    } else if (values.password.length < 4) {
-      errors.password = 'Password must be more than 4 characters';
-    }
-    return errors;
-  };
-
+const FormValidateByYup = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.resultText}>LOGIN FORM</Text>
       <Formik
-        initialValues={{email: '', password: ''}}
-        validate={validate}
+        initialValues={{
+          password: '',
+          email: '',
+        }}
+        validationSchema={SignupSchema}
         onSubmit={(values, actions) => {
-          console.log('hello world', values.email, values.password);
-          setTimeout(() => {
-            console.log('help me');
-            actions.setSubmitting(false);
-          }, 10000);
+          // same shape as initial values
+          console.log(values);
+          actions.setSubmitting(false);
         }}>
         {({
-          values,
-          handleChange,
-          handleSubmit,
           errors,
           touched,
-          handleBlur,
           isValid,
-          dirty,
           isSubmitting,
+          handleSubmit,
+          handleChange,
+          handleBlur,
+          values,
         }) => (
           <View>
             <View style={styles.inputGroup}>
@@ -132,4 +120,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default BasicForm;
+export default FormValidateByYup;

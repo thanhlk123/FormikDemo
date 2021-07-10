@@ -22,6 +22,11 @@ const App = () => {
           component={Usage.BasicForm}
           options={{headerShown: true}}
         />
+        <RootStack.Screen
+          name="FormValidateByYup"
+          component={Usage.FormValidateByYup}
+          options={{headerShown: true}}
+        />
       </RootStack.Navigator>
     </NavigationContainer>
   );
